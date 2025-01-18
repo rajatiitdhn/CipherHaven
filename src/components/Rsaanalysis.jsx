@@ -8,71 +8,36 @@ const Rsaanalysis = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const evaluateVulnerabilities = () => {
-    // Input validation
+  const evaluateVulnerabilities = async () => {
     if (!n || !e || !c) {
       setError("All fields (n, e, c) are required.");
       return;
     }
 
     setLoading(true);
-    setError(""); // Clear error message
-    setFeedback(""); // Clear feedback while evaluating
+    setError("");
+    setFeedback("");
 
-    setTimeout(() => {
-      let vulnerabilities = [];
+    try {
+      const response = await fetch("http://localhost:3000/api/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ n, e, c }),
+      });
 
-      // Factorization attack check
-      const factorizationFeedback = simulateFactorizationAttack(n);
-      if (factorizationFeedback.includes("feasible")) vulnerabilities.push(factorizationFeedback);
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.statusText}`);
+      }
 
-      // Small e attack check
-      const smallEFeedback = simulateSmallEAttack(e, c);
-      if (smallEFeedback.includes("feasible")) vulnerabilities.push(smallEFeedback);
+      const data = await response.json();
 
-      // Boneh-Durfee attack check
-      const bonehDurfeeFeedback = simulateBonehDurfeeAttack(n, e);
-      if (bonehDurfeeFeedback.includes("feasible")) vulnerabilities.push(bonehDurfeeFeedback);
-
-      // Consolidate feedback
-      setFeedback(
-        vulnerabilities.length
-          ? vulnerabilities.join(" ")
-          : "Your RSA setup appears secure against common attacks."
-      );
-
-      setLoading(false); // Stop the loader
-    }, 2000); // Simulate evaluation time
-  };
-
-  // Simulate factorization attack
-  const simulateFactorizationAttack = (n) => {
-    const parsedN = BigInt(n);
-    if (parsedN < BigInt(10 ** 6)) {
-      return "Factorization Attack: The modulus is small and can be factored easily.";
-    } else {
-      return "Factorization Attack: The modulus is large and unlikely to be factored easily.";
-    }
-  };
-
-  // Simulate small e attack
-  const simulateSmallEAttack = (e, c) => {
-    const parsedE = BigInt(e);
-    if (parsedE <= 3n) {
-      return "Small e Attack: Feasible for this setup.";
-    } else {
-      return "Small e Attack: Unlikely to succeed.";
-    }
-  };
-
-  // Simulate Boneh-Durfee attack
-  const simulateBonehDurfeeAttack = (n, e) => {
-    const parsedN = BigInt(n);
-    const parsedE = BigInt(e);
-    if (parsedE > parsedN ** 0.258) {
-      return "Boneh-Durfee Attack: Feasible.";
-    } else {
-      return "Boneh-Durfee Attack: Unlikely to succeed.";
+      setFeedback(data.feedback || "Analysis complete. Check the response for details.");
+    } catch (err) {
+      setError(err.message || "An error occurred while analyzing.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -82,7 +47,6 @@ const Rsaanalysis = () => {
         <h1 className="text-3xl font-bold text-teal-400 mb-6 text-center glow-text">RSA Vulnerability Analysis</h1>
 
         {error && <p className="text-red-600 mb-4">{error}</p>}
-
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-300">Modulus (n):</label>
@@ -116,13 +80,12 @@ const Rsaanalysis = () => {
           />
         </div>
 
-
         <button
           className="w-full bg-teal-500 text-white py-2 px-4 rounded hover:bg-teal-600 transition-all ease-in-out duration-200 transform hover:scale-105"
           onClick={evaluateVulnerabilities}
           disabled={loading}
         >
-          {loading ? "Evaluating Vulnerabilities..." : "Evaluate Vulnerabilities"}
+          {loading ? "Analyzing..." : "Evaluate Vulnerabilities"}
         </button>
 
         <div className="mt-6 p-4 bg-gray-700 rounded-md border border-gray-600">

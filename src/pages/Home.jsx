@@ -83,7 +83,7 @@ const Home = () => {
               } border-2 border-yellow-300 transition-all duration-300 ease-out transform hover:scale-105 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50 shadow-md hover:shadow-xl`}
             >
               <TerminalIcon className="w-5 h-5 inline-block mr-2" />
-              Attack Simulation Lab
+              <NavLink to="/mitm"> Attack Simulation Lab</NavLink>
             </button>
             <button
               className={`w-full py-2 text-left px-4 rounded-lg text-red-300 text-lg ${
@@ -94,7 +94,7 @@ const Home = () => {
               onClick={() => setSelectedTab("Best Practices Checker")}
             >
               <CheckCircleIcon className="w-5 h-5 inline-block mr-2" />
-              Best Practices Checker
+              <NavLink to="/checker"> Best Practices Checker</NavLink>
             </button>
 
             <button

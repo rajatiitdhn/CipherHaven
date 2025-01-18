@@ -4,6 +4,7 @@ import Scanner from "./components/Scanner"
 import MITMLab from "./components/MITM"
 import Visualize from "./components/visualize"
 import Game from "./components/new_component/Game"
+import Checker from "./components/Checker"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Route path="/visualize" element={<Visualize />} />
       <Route path="/mitm" element={<MITMLab/>} />
       <Route path="/game" element={<Game />} />
+      <Route path="/checker" element={<Checker/>} />
     </Routes>
     </BrowserRouter>
   )

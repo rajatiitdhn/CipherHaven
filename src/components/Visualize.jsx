@@ -47,17 +47,6 @@ const Visualize = () => {
               <PuzzleIcon className="w-5 h-5 inline-block mr-2" />
               HashingAnalysis
             </button>
-            <button
-              className={`w-full py-2 text-left px-4 rounded-lg text-teal-300 text-lg ${
-                selectedTab === "Attack Simulation Lab"
-                  ? "bg-teal-700"
-                  : "bg-gray-700"
-              } border-2 border-teal-300 transition-all duration-300 ease-out transform hover:scale-105 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-50 shadow-md hover:shadow-xl`}
-              onClick={() => setSelectedTab("AES")}
-            >
-              <TerminalIcon className="w-5 h-5 inline-block mr-2" />
-              Encryptionanalysis
-            </button>
           </div>
         </div>
 
