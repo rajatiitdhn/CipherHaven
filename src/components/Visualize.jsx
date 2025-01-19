@@ -9,6 +9,7 @@ import {
 import HashingAnalysis from "./HashingAnalysis";
 import Encryptionanalysis from "./new_component/Encryptionanalysis";
 import RSAVizualizer from "./new_component/RSA";
+import SHA from "./new_component/SHA";
 
 const Visualize = () => {
   const [cipherText, setCipherText] = useState("");
@@ -63,7 +64,7 @@ const Visualize = () => {
 
           <main className="mt-10">
             <div>
-              {selectedTab === "SHA-256" && <HashingAnalysis />}
+              {selectedTab === "SHA-256" && <SHA />}
 
               {selectedTab === "RSA" && <RSAVizualizer />}
 
