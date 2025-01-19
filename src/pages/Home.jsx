@@ -122,7 +122,11 @@ const Home = () => {
             </p>
           </header>
 
-          
+          <div className="flex-1 flex items-center justify-center">
+  <h1 className="text-6xl font-extrabold text-teal-400 text-center ">
+    Welcome to Crypto Haven
+  </h1>
+</div>
         </div>
       </div>
       <div className="absolute top-1/2 left-1/2 z-10">
